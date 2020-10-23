@@ -1,10 +1,11 @@
 # demo
+
 This is a Example Python Flask
 
 - please install the requirement in requirement.txt 
 - create database 
 - create the table 
-CREATE TABLE `user` (
+- CREATE TABLE `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `nama` varchar(50) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
