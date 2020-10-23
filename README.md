@@ -14,4 +14,6 @@ This is a Example Python Flask
   `pendidikan_terakhir` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+- run the app.py in (access with browser 127.0.0.1:1902)
  
