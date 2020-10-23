@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os, mysql.connector
-from wtforms import Form, BooleanField, StringField, validators
 import json, datetime
 from json import JSONEncoder
 
@@ -54,6 +53,23 @@ def edituser():
     mycursors.close()
 
     return json.dumps(data, indent=4, cls=DateTimeEncoder)
+
+@app.route('/deleteuser/', methods=['GET'])
+def deleteuser():
+    id = request.args.get("id")
+    mydb = mysql.connector.connect(
+        host="10.148.0.30",
+        user="ncm",
+        passwd="Jakarta1",
+        database="demo"
+    )
+
+    mycursors = mydb.cursor(dictionary=True)
+    mycursors.execute("delete FROM user where id =%s", (id,))
+    mydb.commit()
+    mycursors.close()
+
+    return json.dumps({'status':True}), 200, {'ContentType':'application/json'}
 
 
 @app.route('/inputuser', methods=['POST'])

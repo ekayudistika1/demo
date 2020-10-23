@@ -113,6 +113,30 @@ $('.oh-my-modal').fireModal({
   body: 'This is cool plugin!'
 });
 
+
+function deleteconfirm() {
+event.preventDefault(); // prevent form submit
+var form = event.target.form; // storing the form
+        swal({
+  title: "Are you sure?",
+  text: "But you will still be able to keep the data.",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Yes, delete it!",
+  cancelButtonText: "No, cancel please!",
+  closeOnConfirm: false,
+  closeOnCancel: false
+},
+function(isConfirm){
+  if (isConfirm) {
+    swal("Successfully to cancel join", "please wait a moment", "success");        // submitting the form when user press yes
+    location.reload();
+  } else {
+    swal("Cancelled", "Your data is safe :)", "error");
+  }
+});
+}
+
 function add_user()
 {
 
@@ -204,6 +228,28 @@ function edituser(id)
       $('#modal_edit_user').modal('show'); // show bootstrap modal when complete loaded
       $('.modal-title').text('Edit User Data'); // Set title to Bootstrap modal title
 
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+      alert('Error get data from ajax');
+    }
+  });
+}
+function deleteuser(id)
+{
+
+  $('#form_edituser')[0].reset(); // reset form on modals
+  $('.form-group').removeClass('has-error'); // clear error class
+  $('.help-block').empty(); // clear error string
+
+  //Ajax Load data from ajax
+  $.ajax({
+    url : "http://127.0.0.1:1902/deleteuser?id=" + id,
+    type: "GET",
+    dataType: "JSON",
+    success: function(data)
+    {
+        deleteconfirm();
     },
     error: function (jqXHR, textStatus, errorThrown)
     {
