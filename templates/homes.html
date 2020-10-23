@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Bootstrap Components &rsaquo; Table &mdash; Stisla</title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- CSS Libraries -->
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/css/components.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+
+
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>List User</h1>
+            <div class="section-header-breadcrumb">
+              <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+              <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div>
+
+            </div>
+          </div>
+
+          <div class="section-body">
+
+            </p>
+
+            <div class="row">
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4><button class="btn btn-primary" onclick="add_user()" id="buttoninput" >Add User</button></h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="section-title mt-0">Light</div>
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nama Lengkap</th>
+                          <th scope="col">Tanggal Lahir</th>
+                          <th scope="col">No KTP</th>
+                          <th scope="col">Pekerjaan</th>
+                          <th scope="col">Pendidikan Terakhir</th>
+                          <th scope="col">Actions</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for row in sites %}
+    										<tr>
+    												<td>{{row.1}}</td>
+    												<td>{{row.2}}</td>
+    												<td>{{row.3}}</td>
+    												<td>{{row.4}}</td>
+    												<td>{{row.5}}</td>
+                            <td><button class="btn btn-secondary" onclick="edituser({{ row.0 }})" =>Edit</button>
+
+                            </td>
+                        </tr>
+                        {% endfor  %}
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="modal fade bs-example-modal-lg" id="modal_adduser" role="dialog">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+
+                  <h3 class="modal-title">Person Form</h3>
+              </div>
+              <div class="modal-body form">
+                    <form action="" id="inputmodal" name="form" class="form-horizontal">
+                  <div class="form-group">
+
+                  <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text"  name="nama_lengkap" class="form-control" placeholder="Nama Lengkap" required="">
+                  </div>
+
+                    <label>Tanggal Lahir</label>
+                    <input type="date" name="tgl_lahir" class="form-control" placeholder="Tanggal Lahir" required="">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Nomor KTP</label>
+                    <input type="text" name="no_ktp" class="form-control" placeholder="Nomor KTP" required="">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Pekerjaan</label>
+                    <input type="text" name="pekerjaan" class="form-control" placeholder="Pekerjaan" required="">
+
+                  </div>
+
+                  <div class="form-group">
+                    <label>Pendidikan Terakhir</label>
+                    <select class="form-control select2 " name="pendidikan" data-placeholder="Pendidikan Terakhir">
+
+                      <option></option>
+                      <option value="SD">SD</option>
+                      <option value="SMP">SMP</option>
+                      <option value="SMA">SMA</option>
+                      <option value="Diploma">Diploma</option>
+                      <option value="Sarjana">Sarjana</option>
+                      <option value="Magister">Magister</option>
+                      <option value="Doktor">Doktor</option>
+                </select>
+                  </div>
+
+
+
+                </form>
+
+
+
+
+
+
+              <div class="modal-footer">
+                  <button type="button" id="buttonsaveuser" onclick="save_user()" class="btn btn-primary">Submit </button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  </div>
+  <div class="modal fade bs-example-modal-lg" id="modal_edit_user" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h3 class="modal-title">Edit User</h3>
+            </div>
+            <div class="modal-body form">
+                <form action="" id="form_edituser" name="forms" class="form-horizontal">
+                      <div class="row">
+                          <div class="col-md-12">
+
+                                  <div class="card-body">
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label" for="text-input">Nama Lengkap</label>
+                                        <div class="col-md-9">
+                                             <input name="nama_lengkap" class="form-control" type="text">
+
+                                             <input name="identitas" class="form-control" type="hidden" >
+                                             <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label" for="text-input">Tanggal Lahir</label>
+                                        <div class="col-md-9">
+                                             <input name="tgl_lahir" placeholder="ID Category Asset" class="form-control" type="date" >
+
+                                             <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label" for="text-input">Nomor Ktp</label>
+                                        <div class="col-md-9">
+                                             <input name="no_ktp" placeholder="ID Category Asset" class="form-control" type="text" >
+
+                                             <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label" for="text-input">Pekerjaan</label>
+                                        <div class="col-md-9">
+                                             <input name="pekerjaan" placeholder="ID Category Asset" class="form-control" type="text" >
+
+                                             <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label" for="text-input">Pendidikan Terakhir</label>
+                                        <div class="col-md-4">
+                                          <select class="form-control selectric"  id="pendidikan_terakhir" name="pendidikan_terakhir" >
+                                            <option value="SD">SD</option>
+                                            <option value="SMP">SMP</option>
+                                            <option value="SMA">SMA</option>
+                                            <option value="Diploma">Diploma</option>
+                                            <option value="Sarjana">Sarjana</option>
+                                            <option value="Magister">Magister</option>
+                                            <option value="Doktor">Doktor</option>
+
+
+                                          </select>
+                                             <span class="help-block"></span>
+                                        </div>
+                                    </div>
+
+
+                                  </div>
+
+
+                              <!-- end card -->
+                          </div>
+                          <!-- end col -->
+
+                          <!--/.col-->
+                      </div>
+
+
+
+                      </form>
+
+            <div class="modal-footer">
+                <button type="button" id="btnsaveedituser" onclick="saveedituser()" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
+        </div>
+        <div class="footer-right">
+          2.3.0
+        </div>
+      </footer>
+    </div>
+  </div>
+
+
+  <!-- General JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="static/js/stisla.js"></script>
+
+  <!-- JS Libraies -->
+
+  <!-- Template JS File -->
+  <script src="static/js/scripts.js"></script>
+  <script src="static/js/custom.js"></script>
+
+
+    <script src="static/js/page/bootstrap-modal.js"></script>
+
+  <!-- Page Specific JS File -->
+</body>
+</html>
